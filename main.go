@@ -46,7 +46,14 @@ func CreatePersonEndpoint(w http.ResponseWriter, req *http.Request) {
 }
 
 func DeleteePersonEndpoint(w http.ResponseWriter, req *http.Request) {
-
+	params := mux.Vars(req)
+	for index, item := range people {
+		if item.ID == params["id"] {
+			people = append(people[:index], people[index+1:]...)
+			break
+		}
+	}
+	json.NewEncoder(w).Encode(people)
 }
 
 func main() {
